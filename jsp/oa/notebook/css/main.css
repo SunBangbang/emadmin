@@ -1,0 +1,263 @@
+
+BODY {
+	background-color: #F3F8FA;
+	FONT-SIZE: 13px;  MARGIN: 0px;
+  /*scrollbar-3dlight-color:#404040; 滚动条亮边的颜色（左，上）*/
+  /*scrollbar-face-color:#E4E1DC;滚动条突出部分的颜色*/
+ /* scrollbar-highlight-color:#E3EBEE;滚动条空白部分的颜色*/
+ /* scrollbar-shadow-color:#FBFCFD;立体滚动条阴影颜色*/
+  /*scrollbar-arrow-color:#000000;上下三角箭头颜色*/
+  /*scrollbar-base-color:#D2EDFD;基本的颜色*/
+ /* scrollbar-dark-shadow-color:#D2EDFD;阴影（右，下）*//*SCROLLBAR-TRACK-COLOR: #24b424滚动条的背景颜色*/
+}
+TD {
+	FONT-SIZE: 13px; LINE-HEIGHT: 20px
+}
+/*table{*/
+/*     border-color:#B3C3D0;*/
+/*     border-collapse:collapse;细线表格*/
+/*}*/
+input { 
+	font-size: 13px;
+    background-color: #F3F8FA;
+	BORDER-RIGHT: #969696 0px solid;
+    BORDER-TOP: #969696 0px solid;
+    FONT-WEIGHT: normal;
+    BORDER-LEFT: #969696 0px solid;
+    BORDER-BOTTOM: #B3C3D0 1px solid;/*1像素浅色细线*/
+    FONT-FAMILY: "宋体"
+	   }
+textarea { 
+	font-size: 13px;
+    FONT-FAMILY: "宋体";
+    background-color: #F3F8FA;
+	/*border:inherit;*/
+	overflow:auto;
+   }
+.input1 { 
+	font-size: 13px;
+    background-color: #F3F8FA;
+	BORDER-RIGHT: #969696 0px solid;
+    BORDER-TOP: #969696 0px solid;
+    FONT-WEIGHT: normal;
+    BORDER-LEFT: #969696 0px solid;
+    BORDER-BOTTOM: #454545 0px solid;
+    FONT-FAMILY: "宋体"
+	   }
+.textarea1 { 
+	font-size: 13px;
+    FONT-FAMILY: "宋体";
+    background-color: #F3F8FA;
+	overflow:auto; 
+   }	/*border: none;solid	border-style: dotted ; */
+	/*border-top-width: 1px; */
+	/*border-right-width: 1px; */
+	/*border-bottom-width: 1px; */
+	/*border-left-width: 1px; */
+	/*border: 1 double #B3C3D0;*/
+
+
+
+
+select  { 
+font-size: 13px;
+}
+.input_share { 
+	font-size: 13px;
+    FONT-WEIGHT: normal;
+    FONT-FAMILY: "宋体";
+	color: #1A2C95;/*#B84D12*/
+	background-color: #E5EBF2;/*#F3F8FA*/
+	BORDER-RIGHT: #969696 0px solid;
+    BORDER-TOP: #969696 0px solid;
+    BORDER-LEFT: #969696 0px solid;
+    BORDER-BOTTOM: #454545 0px solid;
+
+	   }
+
+
+.bgima {
+	background-image: url(../images/welcomebg.jpg);/*首页图片背景*/
+	background-repeat: no-repeat;
+	background-position: right middle;
+}
+A.headlink:link {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#ffffff;				/*没有点过的颜色*/
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+
+}
+A.headlink:visited {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR: #FFFFFF;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+}
+A.headlink:hover {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#000000;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+}
+
+.title {
+    color: #ffffff;
+	background-color: #0066B3;/*4D5E8D687AAC889CD4859AD55574C9*//*首页四个栏目背景*/
+}
+
+A.newslink:link {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#CF4D05;				/*首页四个栏目文字链接*/
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: none;
+
+}
+A.newslink:visited {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#6C2702;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: none;
+}
+A.newslink:hover {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#5F5F5F;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+}
+A.linkline:link {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#CF4D05;				/*文字链接*/
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+
+}
+A.linkline:visited {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#6C2702;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+}
+A.linkline:hover {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#000000;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: none;
+}
+
+A.link_rc:link {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#5F6265;				/*文字链接*/
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+
+}
+A.link_rc:visited {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#4B4B4B;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+}
+A.link_rc:hover {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#000000;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: none;
+}
+A.notebookgroup:link {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#ffffff;				/*文字链接*/
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+
+}
+A.notebookgroup:visited {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#ffffff;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+}
+A.notebookgroup:hover {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 13px;
+	COLOR:#000000;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: none;
+}
+.tabletitle {
+	LINE-HEIGHT: 23px;
+	color: #030077;
+    BACKGROUND-COLOR:#E5EBF2;/*录入表格头部分类强调颜色*/
+	/*表格标题背景background-image: url(../images/titlebg.jpg);*/
+	/* borderColorLight=#B3C3D0 borderColorDark=#ffffff*/
+}
+.qiangdiaotd1 {
+	color: #000000;
+    BACKGROUND-COLOR:#E5EBF2;/*录入表格头部分类强调颜色*/
+}
+
+.qiangdiaotd {
+	color: #000000;
+    BACKGROUND-COLOR:#dce0ea;/*负责部门行强调*/
+}
+.qiangdiaotext {
+	color: #030077;   /*负责部门行强调*/
+}
+.searchtd {
+	color: #000000;
+    BACKGROUND-COLOR:#dce0ea;/*搜索行强调*/
+}
+.hiddeninput {
+	color: #BAD7E2;
+    BACKGROUND-COLOR:#F3F8FA;   /*隐藏行*/
+}
+.content_dan{
+    BACKGROUND-COLOR:#dce0ea;/*单行文本框背景颜色，同负责部门行强调背景颜色*/
+}
+.quaryline{
+    BACKGROUND-COLOR:#E5EBF2;/*#DCE4EDC9D1E9搜索行背景颜色*/
+}
+.luntanbody{
+    BACKGROUND-COLOR:#ffffff;/*#DCE4EDC9D1E9搜索行背景颜色*/
+}
+.share {
+	color:#1A2C95;/* #B84D12*/
+    BACKGROUND-COLOR: #E5EBF2;/*#F19D70行#EAECEC强#F1F4FA调#F0F2F7*/
+}
+.share0 {
+	color:#B84D12;/* */
+    /*#F19D70行#EAECEC强#F1F4FA调#F0F2F7BACKGROUND-COLOR: #E5EBF2;*/
+}
+.anniu{
+    BACKGROUND-COLOR:#FFFFFF;
+    BORDER: #000000 1px solid ;
+}

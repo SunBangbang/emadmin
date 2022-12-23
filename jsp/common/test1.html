@@ -1,0 +1,137 @@
+
+
+
+
+<SCRIPT LANGUAGE='JavaScript'>
+    <!--
+   //设置网页打印的页眉页脚为空 
+
+		function _after_load() {
+			
+						
+            if (window.top.document.getElementById('_global_save')!=null && window.top.document.getElementById('_global_save').value.length>0) {
+                document.body.innerHTML=window.top.document.getElementById('_global_save').value;
+                window.top.document.getElementById('_global_save').value="";
+ 			    document.getElementById('_button_area' ).style.display="block";
+			    document.getElementById('_button_area_message' ).style.display="none";
+ 			    reAttachSubAreaEvent();              
+           }
+          
+			for (var i = 0; i <form1.elements.length ; i++) 
+			{
+				
+				thisItem=form1.elements.elements[i]; 
+				
+				if(thisItem.name.indexOf('maxcount')>0)
+				{
+
+					var maxcount_i = parseInt(thisItem.value);
+
+
+					if (maxcount_i <= 0 && (form1.all("_sys_txm")==null || form1.all("_sys_txm").type!='text')) {
+                            if (document.getElementsByName('add' ).length>0) {
+                                document.getElementsByName('add' )[0].click();
+                            } else if  (document.getElementById('add' )!=null) {
+						        document.getElementById('add' ).click();
+                            }
+                    }
+
+				}
+				
+			}
+			if (form1.all("_sys_txm")!=null && form1.all("_sys_txm").type=='text') {
+                			//条形码
+			        form1.all("_sys_txm").onkeydown = function(){ _doTxmInput() };
+			        form1.all("_sys_txm").focus();
+            }
+			
+		}
+		
+ 		function _click_button(form1) { 
+			if (doCheck(form1)==true) {
+				document.getElementById('_button_area' ).style.display="none";
+				document.getElementById('_button_area_message' ).style.display="block";
+                if (window.top.document.getElementById('_global_save')!=null)  window.top.document.getElementById('_global_save').value= document.body.innerHTML
+				form1.submit();
+			}
+			
+		}
+   //-->
+</SCRIPT>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name=save content=history >
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<title></title>
+
+<link rel="stylesheet" href="/emadmin/css/c1/style_new.css">
+<script language=javascript src="/emadmin/js/do_check.js"></script>
+<script language=javascript src="/emadmin/js/pop_selections.js"></script>
+<script language=javascript src="/emadmin/js/bi_sub_table.js"></script>
+<script language=javascript src="/emadmin/js/print.js"></script>
+<script language=javascript src="/emadmin/js/do_user_select_item.js"></script>
+<script language=javascript src="/emadmin/js/pop_upload.js"></script>
+<script language=javascript src="/emadmin/js/common.js"></script>
+
+
+</head>
+
+<body onLoad="_after_load();">
+		<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+		  <tr>
+			<!-- 标题区 --> 
+			<td height=""  valign="middle" class='x_center_head_bg'>
+					<span class="x_center_title" >
+						员工档案登记
+					</span>
+			</td>
+			<!-- 标题区 --> 
+		  </tr>
+		  </table>
+		 <div class="x_bill_detail_button_div"></div>
+
+		  <!-- 内容区 -->
+					<table class="x_bill_outer_table" cellspacing="0" align="center">
+						  <tr>
+							<td align="left">	
+						  <form action="add.jsp" method="post" name="form1" >
+						  <input type='hidden' name="_backurl" value="/emadmin/jsp/common/add.jsp?modul_id=rs_da_addModul">	
+                                  <input type="hidden" name="listretid" value="null">
+								  
+
+<table   id="bill_main_table"  cellspacing="0" class="x_bill_main_table">
+<tr><td  class="x_bill_td_00" width="20%" align="right">员工编号:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a01"  type="text" regName ="员工编号"  reg = "_r_" value="" onChange="_xt_check_unique('rs_da','a01',this);" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")><span style="color:red;">&nbsp;*</span></td><td  class="x_bill_td_00" width="20%" align="right">姓&nbsp;&nbsp;&nbsp;&nbsp;名:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a02"  type="text" regName ="姓名"  reg = "_r_" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")><span style="color:red;">&nbsp;*</span></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">性&nbsp;&nbsp;&nbsp;&nbsp;别:</td><td  class="x_bill_td_11" width="30%" align="left"><div id="selecta03"><select onFocus="this.fireEvent('onMouseDown');" name="a03" regName ="性别"  reg = "_rs_" class="x_bill_item_select" >      <option value="">请选择</option>      <option value="001">男</option>      <option value="002">女</option></select></span><span style="color:red;">&nbsp;*</span></td><td  class="x_bill_td_10" width="20%" align="right">出生日期:</td><td  class="x_bill_td_11" width="30%" align="left"><input name="a04"  type="text"  regName ="出生日期"  reg = "_r__date_" value=""   class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"130") onclick="doSelectCalendar('a04')"><span style="color:red;">&nbsp;*</span></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">婚&nbsp;&nbsp;&nbsp;&nbsp;否:</td><td  class="x_bill_td_01" width="30%" align="left"><div id="selecthf"><select name="hf" regName ="婚否" class="x_bill_item_select" >      <option value="">请选择</option>      <option value="0">否</option>      <option value="1">是</option></select></span></td><td  class="x_bill_td_00" width="20%" align="right">民&nbsp;&nbsp;&nbsp;&nbsp;族:</td><td  class="x_bill_td_01" width="30%" align="left"><div id="selecta05"><select name="a05" regName ="民族" class="x_bill_item_select" >      <option value="">请选择</option>      <option value="001">汉族</option>      <option value="002">满族</option>      <option value="003">回族</option>      <option value="004">蒙族</option>      <option value="006">壮族</option>      <option value="007">傣族</option>      <option value="008">瑶族</option>      <option value="009">高山族</option>      <option value="005">其他</option>      <option value="010">蒙古族</option>      <option value="011">土家族</option>      <option value="012">朝鲜族</option></select></span></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">政治面貌:</td><td  class="x_bill_td_11" width="30%" align="left"><div id="selecta06"><select name="a06" regName ="政治面貌" class="x_bill_item_select" >      <option value="">请选择</option>      <option value="001">党员</option>      <option value="002">团员</option>      <option value="003">群众</option>      <option value="004">其他</option></select></span></td><td  class="x_bill_td_10" width="20%" align="right">籍&nbsp;&nbsp;&nbsp;&nbsp;贯:</td><td  class="x_bill_td_11" width="30%" align="left"><div id="selecta07"><select name="a07" regName ="籍贯" class="x_bill_item_select" >      <option value="">请选择</option>      <option value="001">北京市</option>      <option value="002">河北省</option>      <option value="003">上海市</option>      <option value="004">河南省</option>      <option value="005">陕西省</option>      <option value="006">山西省</option></select></span></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">部&nbsp;&nbsp;&nbsp;&nbsp;门:</td><td  class="x_bill_td_01" width="30%" align="left"><div id="selecta08"><select name="a08" regName ="部门"  reg = "_rs_" class="x_bill_item_select" ><option value=''>请选择</option>      <option value=100>┕绿洲贸易</option>      <option value=100001>&nbsp;&nbsp;&nbsp;┕经理室</option>      <option value=100002>&nbsp;&nbsp;&nbsp;┕销售部</option>      <option value=100002001>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┕销售一部</option>      <option value=100003>&nbsp;&nbsp;&nbsp;┕采购部</option>      <option value=100005>&nbsp;&nbsp;&nbsp;┕财务部</option>      <option value=100006>&nbsp;&nbsp;&nbsp;┕库房</option></select></span><span style="color:red;">&nbsp;*</span></td><td  class="x_bill_td_00" width="20%" align="right">职&nbsp;&nbsp;&nbsp;&nbsp;务:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a09"  type="text" regName ="职务" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">来源时间:</td><td  class="x_bill_td_11" width="30%" align="left"><input name="a13"  type="text"  regName ="来源时间"  reg = "_date_" value=""   class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"130") onclick="doSelectCalendar('a13')"></td><td  class="x_bill_td_10" width="20%" align="right">入职日期:</td><td  class="x_bill_td_11" width="30%" align="left"><input name="a11"  type="text"  regName ="入职日期"  reg = "_date_" value=""   class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"130") onclick="doSelectCalendar('a11')"></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">员工来源:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a12"  type="text" regName ="员工来源" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td><td  class="x_bill_td_00" width="20%" align="right">离职时间:</td><td  class="x_bill_td_01" width="30%" align="left"><input name="a10"  type="text"  regName ="离职时间"  reg = "_date_" value=""   class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"130") onclick="doSelectCalendar('a10')"></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">员工状态:</td><td  class="x_bill_td_11" width="30%" align="left"><div id="selecta14"><select name="a14" regName ="员工状态" class="x_bill_item_select" >      <option value="">请选择</option>      <option value="001">在职</option>      <option value="002">离职</option>      <option value="003">休假</option>      <option value="004">病假</option>      <option value="005">其他</option>      <option value="006">试用期</option></select></span></td><td  class="x_bill_td_10" width="20%" align="right">状态时间:</td><td  class="x_bill_td_11" width="30%" align="left"><input name="a15"  type="text"  regName ="状态时间"  reg = "_date_" value=""   class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"130") onclick="doSelectCalendar('a15')"></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">专&nbsp;&nbsp;&nbsp;&nbsp;业:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a16"  type="text" regName ="专业" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td><td  class="x_bill_td_00" width="20%" align="right">毕业院校:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a17"  type="text" regName ="毕业院校" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">毕业时间:</td><td  class="x_bill_td_11" width="30%" align="left"><input name="a18"  type="text"  regName ="毕业时间"  reg = "_date_" value=""   class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"130") onclick="doSelectCalendar('a18')"></td><td  class="x_bill_td_10" width="20%" align="right">学&nbsp;&nbsp;&nbsp;&nbsp;历:</td><td  class="x_bill_td_11" width="30%" align="left"><div id="selecta19"><select name="a19" regName ="学历"  reg = "_rs_" class="x_bill_item_select" >      <option value="">请选择</option>      <option value="001">博士</option>      <option value="002">硕士</option>      <option value="003">本科</option>      <option value="004">大专</option>      <option value="005">中专</option>      <option value="006">高中</option>      <option value="007">初中</option>      <option value="008">小学</option>      <option value="009">文盲</option></select></span><span style="color:red;">&nbsp;*</span></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">身份证号:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a20"  type="text" regName ="身份证号" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td><td  class="x_bill_td_00" width="20%" align="right">户口类型:</td><td  class="x_bill_td_01" width="30%" align="left"><div id="selecthklb"><select name="hklb" regName ="户口类型" class="x_bill_item_select" >      <option value="">请选择</option>      <option value="001">农村户口</option>      <option value="002">城镇户口</option></select></span></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">养老保险序号:</td><td  class="x_bill_td_11" width="30%" align="left"><input  name="ylbxxh"  type="text" regName ="养老保险序号" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td><td  class="x_bill_td_10" width="20%" align="right">养老保险起始日:</td><td  class="x_bill_td_11" width="30%" align="left"><input name="ylbxqsr"  type="text"  regName ="养老保险起始日"  reg = "_date_" value=""   class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"130") onclick="doSelectCalendar('ylbxqsr')"></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">失业保险起始日:</td><td  class="x_bill_td_01" width="30%" align="left"><input name="sybxqsr"  type="text"  regName ="失业保险起始日"  reg = "_date_" value=""   class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"130") onclick="doSelectCalendar('sybxqsr')"></td><td  class="x_bill_td_00" width="20%" align="right">劳动合同起始日:</td><td  class="x_bill_td_01" width="30%" align="left"><input name="ldhtqsr"  type="text"  regName ="劳动合同起始日"  reg = "_date_" value=""   class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"130") onclick="doSelectCalendar('ldhtqsr')"></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">劳动合同到期日:</td><td  class="x_bill_td_11" width="30%" align="left"><input name="ldhtdqr"  type="text"  regName ="劳动合同到期日"  reg = "_date_" value=""   class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"130") onclick="doSelectCalendar('ldhtdqr')"></td><td  class="x_bill_td_10" width="20%" align="right">常住地址:</td><td  class="x_bill_td_11" width="30%" align="left"><input  name="a21"  type="text" regName ="常住地址" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">常住地电话:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a22"  type="text" regName ="常住地电话" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td><td  class="x_bill_td_00" width="20%" align="right">移动电话:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a23"  type="text" regName ="移动电话" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">现&nbsp;住&nbsp;址:</td><td  class="x_bill_td_11" width="30%" align="left"><input  name="a24"  type="text" regName ="现住址" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td><td  class="x_bill_td_10" width="20%" align="right">家庭电话:</td><td  class="x_bill_td_11" width="30%" align="left"><input  name="a25"  type="text" regName ="家庭电话" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">办公电话:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a26"  type="text" regName ="办公电话" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td><td  class="x_bill_td_00" width="20%" align="right">电子邮件:</td><td  class="x_bill_td_01" width="30%" align="left"><input  name="a27"  type="text" regName ="电子邮件" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">QQ(MSN):</td><td  class="x_bill_td_11" width="30%" align="left"><input  name="qq"  type="text" regName ="QQ(MSN)" value="" class="x_bill_item_input" onFocus=this.style.backgroundColor="#0000ff"  onBlur=this.style.backgroundColor="#ffffff"  onkeyDown=_bill_item_keypress(this,"020")></td><td  class="x_bill_td_10" >&nbsp;</td><td  class="x_bill_td_11" >&nbsp;</td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">工作经历:</td><td  class="x_bill_td_01"  align="left"  colspan="3"  ><textarea name="a28"   regName ="工作经历" rows="5"  cols="70" class="x_bill_item_text"></textarea></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">教育培训:</td><td  class="x_bill_td_11"  align="left"  colspan="3"  ><textarea name="a29"   regName ="教育培训" rows="5"  cols="70" class="x_bill_item_text"></textarea></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">奖惩情况:</td><td  class="x_bill_td_01"  align="left"  colspan="3"  ><textarea name="a30"   regName ="奖惩情况" rows="5"  cols="70" class="x_bill_item_text"></textarea></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">家庭成员:</td><td  class="x_bill_td_11"  align="left"  colspan="3"  ><textarea name="a31"   regName ="家庭成员" rows="5"  cols="70" class="x_bill_item_text"></textarea></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">备&nbsp;&nbsp;&nbsp;&nbsp;注:</td><td  class="x_bill_td_01"  align="left"  colspan="3"  ><textarea name="a32"   regName ="备注" rows="5"  cols="70" class="x_bill_item_text"></textarea></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">照&nbsp;&nbsp;&nbsp;&nbsp;片:</td><td  class="x_bill_td_11"  align="left"  colspan="3"  ><input name="a33"  type="hidden"   value="" readonly><img src="/emadmin/images/shangchuan.jpg"   onMouseOver="this.style.cursor='hand'"  onClick="do_upload('a33')">  <span id="a33_div">  </span><input type="hidden" name="a33_old_file" value=""></br></td></tr></table>
+
+<input name="_subArea_num" value="0" type=hidden>
+<input name=_control_bill_id_ value=rs_da_addBill type=hidden><input name="lfbaseprimarykey" value="null" type=hidden>
+<input name="_control_modul_id" value="rs_da_addModul" type=hidden>
+<input name="id" value= "" type=hidden><input name="rylb" value= "" type=hidden><input name="zdy1" value= "" type=hidden><input name="zdy2" value= "" type=hidden><input name="zdy3" value= "" type=hidden><input name="zdy4" value= "" type=hidden><input name="zdy5" value= "" type=hidden><input name="zdy6" value= "" type=hidden><input name="zdy7" value= "" type=hidden><input name="zdy8" value= "" type=hidden><input name="zdy9" value= "" type=hidden><input name="cxxss" value= "" type=hidden><input name="enabled" value= "1" type=hidden><input name="autokeyword" value= "" type=hidden>
+<SCRIPT LANGUAGE='JavaScript'>
+    <!--
+
+    //-->
+</SCRIPT> 
+<SCRIPT LANGUAGE='JavaScript'><!-- 
+ function reAttachSubAreaEvent() {
+
+    }//--></SCRIPT>
+
+
+
+                                <div align="center" id="_button_area" style="display:block; padding-top:10px;vertical-align:bottom; clear:both;">
+								<img src="/emadmin/images/c2/button/bill_save.gif" onMouseOver="this.style.cursor='hand'"   onClick="_click_button(form1)"/> &nbsp;&nbsp;&nbsp;&nbsp;
+                                
+                                    <img src="/emadmin/images/c2/button/bill_cancel.gif" onMouseOver="this.style.cursor='hand'"   onclick='javascript:history.back(-1);'/> 
+                                
+                                </div>
+								<div align="center" id="_button_area_message" style="display:none;clear:both;">正在处理，请稍等...</div>
+						  </form>
+						   </td>
+						  </tr>
+						</table>
+			
+			<!-- 内容区 -->
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+BODY {
+	MARGIN: 0px;
+	margin-bottom: 0px;
+	FONT-SIZE: 12px;  
+	background-image:url(../images/head.gif);
+	background-repeat: no-repeat;
+	background-position: left top;
+
+}
+TD {
+
+	FONT-SIZE: 12px;
+	color: #ffffff;
+	LINE-HEIGHT: 18px;
+}
+A.headlink:link {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 12px;
+	COLOR:#ffffff;				/*没有点过的颜色*/
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: none;
+
+}
+A.headlink:visited {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 12px;
+	COLOR: #FFFFFF;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: none;
+}
+A.headlink:hover {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 12px;
+	COLOR:#ffffff;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: underline;
+}
+.imghead {
+	background-image: url(../images/head1.gif);
+	background-repeat: no-repeat;
+	background-position: right top;
+}

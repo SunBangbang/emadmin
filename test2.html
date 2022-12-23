@@ -1,0 +1,548 @@
+
+
+
+
+<SCRIPT LANGUAGE='JavaScript'>
+    <!--
+   //������ҳ��ӡ��ҳüҳ��Ϊ�� 
+
+		function _after_load() {
+			
+						
+            if (window.top.document.getElementById('_global_save')!=null && window.top.document.getElementById('_global_save').value.length>0) {
+                document.body.innerHTML=window.top.document.getElementById('_global_save').value;
+                window.top.document.getElementById('_global_save').value="";
+ 			    document.getElementById('_button_area' ).style.display="block";
+			    document.getElementById('_button_area_message' ).style.display="none";
+ 			    reAttachSubAreaEvent();              
+           }
+          
+			for (var i = 0; i <form1.elements.length ; i++) 
+			{
+				
+				thisItem=form1.elements.elements[i]; 
+				
+				if(thisItem.name.indexOf('maxcount')>0)
+				{
+
+					var maxcount_i = parseInt(thisItem.value);
+
+
+					if (maxcount_i <= 0 && (form1.all("_sys_txm")==null || form1.all("_sys_txm").type!='text')) {
+                            if (document.getElementsByName('add' ).length>0) {
+                                document.getElementsByName('add' )[0].click();
+                            } else if  (document.getElementById('add' )!=null) {
+						        document.getElementById('add' ).click();
+                            }
+                    }
+
+				}
+				
+			}
+			if (form1.all("_sys_txm")!=null && form1.all("_sys_txm").type=='text') {
+                			//������
+			        form1.all("_sys_txm").onkeydown = function(){ _doTxmInput() };
+			        form1.all("_sys_txm").focus();
+            }
+			
+		}
+		
+ 		function _click_button(form1) { 
+			if (doCheck(form1)==true) {
+				document.getElementById('_button_area' ).style.display="none";
+				document.getElementById('_button_area_message' ).style.display="block";
+                if (window.top.document.getElementById('_global_save')!=null)  window.top.document.getElementById('_global_save').value= document.body.innerHTML
+				form1.submit();
+			}
+			
+		}
+
+//
+function getAjaxResult (String url) {
+	var ajaxRequest;  //����ajax����
+	var resultText;  //���صĽ��
+	
+	try{
+		// Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
+	} catch (e){
+		// Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e){
+				// Something went wrong
+				return "";
+			}
+		}
+	}
+	// Create a function that will receive data sent from the server
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+            if(ajaxRequest.status==200){
+                var rs=ajaxRequest.responseText;
+				if (rs.indexOf("!!!NotFound!!!")>=0) {
+					return "".split("$^#");
+				} else {
+					return rs.split("$^#");
+				}
+            }
+		}
+	}
+	ajaxRequest.open("GET", url, true);
+	ajaxRequest.send(null); 
+}
+
+	function _dr_down(myinputName,modul_id) {
+		myinput=document.getElementById(myinputName);
+		_dr_div=document.getElementById("_dr_div_"+myinputName);
+		_dr_table=document.getElementById("_dr_table_"+myinputName);
+		_dr_store_input=document.getElementById(myinputName+"_dr_store_input");
+		myinput_dr_id=document.getElementById(myinputName+"_dr_id");
+		//�¼�ͷ 40
+		//�ϼ�ͷ 38
+		alert(myinput.clientTop);
+		if ( (event.keyCode>=48 && event.keyCode<=90)	
+			|| (event.keyCode>=186 && event.keyCode<=192)	
+			|| (event.keyCode>=219 && event.keyCode<=222)	
+		){
+			 _dr_store_xm_input=myinput.value;
+			 //�������ֵ��ȡ�����������ļ�¼
+			 var result=getAjaxResult("/emadmin/shared/xt_getAjaxResultForInput.jsp?keywords="+myinput.value+"modul_id="+modul_id+"&item_name="+myinputName);
+			 //��������Ϊ�գ������¼���table��
+			 if (result.length>0) {
+				 //�����
+				for (i=0;i<_dr_table.length;i++)  _dr_table.deleteRow(i);
+				//��ʼ������
+				for (i=0;i<result.length;i++ ) {
+					html="class='x_dr_table_tr_no' onMouseOver=\"this.className='x_dr_table_tr_yes'\"  onMouseOut=\"this.className='x_dr_table_tr_no'\" onclick='_dr_click(\""+myinputName+"\","+i+")'><td nowrap>"+result[i]+"<input type=hidden  id='_dr_tr_input_"+myinputName+"_"+i+"' value='"+result[i]+"'><input type=hidden  id='_dr_tr_input_id_"+myinputName+"_"+i+"' value='"+result[i]+"'></td></tr>";
+					tr = _dr_table.insertRow(i);
+					tr.innerHTML=html;
+				}
+				//��ʾ����
+				_dr_div.style.display="";
+			 } else {
+				 //���ر���
+				_dr_div.style.display="none";
+			 }
+
+		}else if(event.keyCode==8){  //������˸�
+			_dr_div.style.display="none";
+		}else if(event.keyCode==9){  //�����Tab   ���������� 
+			_dr_div.style.display="none";
+		}else if (event.keyCode==27) {   //���� Escape
+			_dr_div.style.display="none";
+			 _dr_store_xm_input="";
+			myinput.value="";
+			myinput_dr_id.value="";
+
+		} else if (event.keyCode==40)	{ //������¼�ͷ
+			//������������صģ�����ʾ
+			if (_dr_div.style.display=="none")	 _dr_div.style.display="";
+			//ͨ��ѭ������ѡ�е�������һ��
+			var find=-1;
+			for (i=0;i<_dr_table.rows.length;i++)    {
+				if (_dr_table.rows.item(i).className=="x_dr_table_tr_yes")   {
+					find=i;
+					_dr_table.rows.item(i).className="x_dr_table_tr_no";
+				}
+			}
+			//��������һ�У������»ָ���¼���ֵ
+			if (find+1==_dr_table.rows.length)	{
+				myinput.value=_dr_store_input.value;
+				myinput_dr_id.value="";
+			}
+			//��find����һ�У���Ϊѡ��,����������һ�У������
+			if (find+1<_dr_table.rows.length)	{
+				_dr_table.rows.item(find+1).className="x_dr_table_tr_yes";
+				find++;
+				myinput.value=document.getElementById("_dr_tr_input_"+myinputName+"_"+find).value;
+				myinput_dr_id.value=document.getElementById("_dr_tr_input_id_"+myinputName+"_"+find).value;
+			}
+			return;
+		} else if (event.keyCode==38)	{ //������ϼ�ͷ
+			//������������صģ�����ʾ
+			if (_dr_div.style.display=="none")	 _dr_div.style.display="";
+			//ͨ��ѭ������ѡ�е�������һ��
+			var find=_dr_table.rows.length;
+			for (i=0;i<_dr_table.rows.length;i++)    {
+				if (_dr_table.rows.item(i).className=="x_dr_table_tr_yes")   {
+					find=i;
+					_dr_table.rows.item(i).className="x_dr_table_tr_no";
+				}
+			}
+			//����ǵ�һ�У������»ָ���¼���ֵ
+			if (find-1==-1)	{
+				myinput.value=_dr_store_input.value;
+				myinput_dr_id.value="";
+			}
+			//��find����һ�У���Ϊѡ��,����������һ�У������
+			if (find-1>-1)	{
+				_dr_table.rows.item(find-1).className="x_dr_table_tr_yes";
+				find--;
+				myinput.value=document.getElementById("_dr_tr_input_"+myinputName+"_"+find).value;
+				myinput_dr_id.value=document.getElementById("_dr_tr_input_id_"+myinputName+"_"+find).value;
+			}
+			return;
+		}
+	 }
+	 function _dr_click(myinputName,rowNumber) {
+		myinput=document.getElementById(myinputName);
+		_dr_div=document.getElementById("_dr_div_"+myinputName);
+		_dr_table=document.getElementById("_dr_table_"+myinputName);
+		_dr_store_input=document.getElementById(myinputName+"_dr_store_input");
+		myinput_dr_id=document.getElementById(myinputName+"_dr_id");
+	
+		myinput.value=document.getElementById("_dr_tr_input_"+myinputName+"_"+rowNumber).value;
+		myinput_dr_id.value=document.getElementById("_dr_tr_input_id_"+myinputName+"_"+rowNumber).value;
+		_dr_div.style.display="none";
+		myinput.focus();
+		myinput.value=myinput.value;
+	 }
+
+
+
+
+
+   //-->
+</SCRIPT>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name=save content=history >
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<title></title>
+
+<link rel="stylesheet" href="/emadmin/css/c1/style_new.css">
+<script language=javascript src="/emadmin/js/do_check.js"></script>
+<script language=javascript src="/emadmin/js/pop_selections.js"></script>
+<script language=javascript src="/emadmin/js/bi_sub_table.js"></script>
+<script language=javascript src="/emadmin/js/print.js"></script>
+<script language=javascript src="/emadmin/js/do_user_select_item.js"></script>
+<script language=javascript src="/emadmin/js/pop_upload.js"></script>
+<script language=javascript src="/emadmin/js/common.js"></script>
+
+
+</head>
+
+<body onLoad="_after_load();">
+		<table width="100%"  border="0" cellpadding="0" cellspacing="0">
+		  <tr>
+			<!-- ������ --> 
+			<td height=""  valign="middle" class='x_center_head_bg'>
+					<span class="x_center_title" >
+						����ͻ��Ǽ�
+					</span>
+			</td>
+			<!-- ������ --> 
+		  </tr>
+		  </table>
+		 <div class="x_bill_detail_button_div"></div>
+
+		  <!-- ������ -->
+					<table class="x_bill_outer_table" cellspacing="0" align="center">
+						  <tr>
+							<td align="left">	
+						  <form action="add.jsp" method="post" name="form1" >
+						  <input type='hidden' name="_backurl" value="/emadmin/jsp/common/add.jsp?modul_id=kh_yxkh_addModul">	
+                                  <input type="hidden" name="listretid" value="null">
+								  
+
+<table   id="bill_main_table"  cellspacing="0" class="x_bill_main_table">
+<tr><td  class="x_bill_td_00" width="20%" align="right">��˾����:</td><td  class="x_bill_td_01" width="30%" align="left"><input type='hidden' name="khjc_dr_id" > <input  name="khjc"  onkeyUp='_dr_down("khjc","kh_yxkh_addModul")' type="text" regName ="��˾����"  reg = "_r_" value="" class="x_bill_item_input"><span style="color:red;">&nbsp;*</span><div id='_dr_div_khjc' style='displaynone:;width:100px;top:28px'><table id='_dr_table_khjc' cellspacing='0' cellpadding='0'></table></div></td><td  class="x_bill_td_00" width="20%" align="right">�ͻ�����:</td><td  class="x_bill_td_01" width="30%" align="left"><select name="khlx" regName ="�ͻ�����" class="x_bill_item_select" >      <option value="">��ѡ��</option>      <option value="001">��������</option>      <option value="003">����������</option>      <option value="006">bbbb</option>      <option value="007">����������</option>      <option value="005">������</option></select></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">�ͻ�����:</td><td  class="x_bill_td_11"  align="left"  colspan="3"  ><textarea name="khxq"   regName ="�ͻ�����" rows="5"  cols="70" class="x_bill_item_text"></textarea></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">������:</td><td  class="x_bill_td_01"  align="left"  colspan="3"  ><textarea name="dfnr"   regName ="������" rows="5"  cols="70" class="x_bill_item_text"></textarea></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">���±���:</td><td  class="x_bill_td_11" width="30%" align="left"><input type='hidden' name="zxbj_dr_id" > <input  name="zxbj"  onkeyUp='_dr_down("zxbj","kh_yxkh_addModul")' type="text" regName ="���±���" value="" class="x_bill_item_input"><div id='_dr_div_zxbj' style='displaynone:;width:100px;top:28px'><table id='_dr_table_zxbj' cellspacing='0' cellpadding='0'></table></div></td><td  class="x_bill_td_10" width="20%" align="right">�´���ϵ����:</td><td  class="x_bill_td_11" width="30%" align="left"><input name="xclxrq"  type="text"  size="10"  regName ="�´���ϵ����"  reg = "_date_"   class="x_bill_item_input_date_time" > <input name="xclxrq_time"  type="text"  size="6"   reg = "_time_" regName ="�´���ϵ����" class="x_bill_item_input_date_time" > <a href="#" onclick="doSelectCalendarAndTime('xclxrq')"><img src="/emadmin/images/c2/button/choose.gif" border=0/></a></td></tr></tbody></table></div><div>
+       <table class='x_bill_sub_table_button'  cellpadding='0' cellspacing='0' >
+            <tr>
+                <td class='x_bill_sub_table_button_td' >
+                   <div class='x_bill_sub_table_button_td_div'> <div class='x_bill_sub_table_button_div' onclick='_subarea_kh_yxkh_kh_yxkh_lxr_add_add_new_row();' name='add' id='add'><TABLE cellSpacing='0' cellPadding='0'"><tr><td class="x_button_div_left"  onMouseOver="this.style.cursor='hand'" ></td><td class="x_button_div_middle"  onMouseOver="this.style.cursor='hand'" >&nbsp;������ϵ��&nbsp;</td><td class="x_button_div_right"  onMouseOver="this.style.cursor='hand'" ></td></tr></table></div> <div class='x_bill_sub_table_button_div'  onclick='_subarea_kh_yxkh_kh_yxkh_lxr_add_delete_row();' name='delete'><TABLE cellSpacing='0' cellPadding='0'"><tr><td class="x_button_div_left"  onMouseOver="this.style.cursor='hand'" ></td><td class="x_button_div_middle"  onMouseOver="this.style.cursor='hand'" >&nbsp;ɾ����ϵ��&nbsp;</td><td class="x_button_div_right"  onMouseOver="this.style.cursor='hand'" ></td></tr></table></div>&nbsp;&nbsp;&nbsp&nbsp<span class="x_bill_sub_table_title_tm"><input type=hidden name='_sys_txm' value='' class="x_bill_sub_table_input_tm"></span></div><input type=hidden name=_subarea_kh_yxkh_kh_yxkh_lxr_add_maxcount value="0">
+                </td>
+            </tr>
+       </table>
+   <div id="_sub_bill_area_div" class='x_bill_sub_area_div'> 
+       <table width="100%" id='_subarea_kh_yxkh_kh_yxkh_lxr_add'  class='x_bill_sub_bill_table'  cellpadding='0' cellspacing='0' >
+            <tr id='_subarea_kh_yxkh_kh_yxkh_lxr_add_0' class='x_bill_sub_bill_table_header_tr'>
+                <td nowrap align=center  class='x_bill_sub_bill_table_header_td_hh'>&nbsp;&nbsp;�� ��&nbsp;&nbsp;</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>����<span style="color:red;">&nbsp;*</span></td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>�Ա�</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>���ڲ���</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>ְ��</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>����ҵ��</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>�����绰</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>�ƶ��绰</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>��ͥ�绰</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>��ͥסַ</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>����</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>����</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>MSN/(QQ)</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>����</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>����</td>
+                <td nowrap align=center   class='x_bill_sub_bill_table_header_td'>��ע</td>
+            </tr>
+       </table>
+
+<SCRIPT LANGUAGE='JavaScript'>
+    <!--
+
+function _subarea_kh_yxkh_kh_yxkh_lxr_add_add_new_row() {
+
+                var maxcount_i =parseInt(document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_maxcount')[0].value);
+                var row_html=new Array(15);
+                row_html[0]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_xm_' + maxcount_i + '"  type="text" regName ="����"  reg = "_r_" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[1]='<select name="_subarea_kh_yxkh_kh_yxkh_lxr_add_xb_' + maxcount_i + '"  regName ="�Ա�" class="x_bill_item_select" >      <option value="">��ѡ��</option>      <option value="001">��</option>      <option value="002">Ů</option></select>';
+                row_html[2]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_szbm_' + maxcount_i + '"  type="text" regName ="���ڲ���" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[3]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_zw_' + maxcount_i + '"  type="text" regName ="ְ��" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[4]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_fzyw_' + maxcount_i + '"  type="text" regName ="����ҵ��" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[5]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_gzdh_' + maxcount_i + '"  type="text" regName ="�����绰" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[6]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_yddh_' + maxcount_i + '"  type="text" regName ="�ƶ��绰" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[7]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_jtdh_' + maxcount_i + '"  type="text" regName ="��ͥ�绰" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[8]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_jtzz_' + maxcount_i + '"  type="text" regName ="��ͥסַ" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[9]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_cz_' + maxcount_i + '"  type="text" regName ="����" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[10]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_email_' + maxcount_i + '"  type="text" regName ="����" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[11]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_msn_' + maxcount_i + '"  type="text" regName ="MSN/(QQ)" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[12]='<input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_sr_' + maxcount_i + '"  type="text"  regName ="����"  reg = "_date_" size="10" value=""   class="x_bill_item_input_sub" > <a href="#" onclick="doSelectCalendar(\'_subarea_kh_yxkh_kh_yxkh_lxr_add_sr_' + maxcount_i + '\')"><img src="/emadmin/images/c2/button/choose.gif" border=0/></a>';
+                row_html[13]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_aihao_' + maxcount_i + '"  type="text" regName ="����" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[14]='<input  name="_subarea_kh_yxkh_kh_yxkh_lxr_add_bz_' + maxcount_i + '"  type="text" regName ="��ע" size="10" value="" class="x_bill_item_input_sub">';
+                row_html[14] += '<input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_id_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_khmc_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_zdy1_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_zdy2_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_zdy3_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_zdy4_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_zdy5_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_zdy6_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_zdy7_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_khbh_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_zdy8_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_kh_id_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_zdy9_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_lrr_' + maxcount_i + '" value= "admin" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_lrrq_' + maxcount_i + '" value= "2009-05-29" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_lrbm_' + maxcount_i + '" value= "100" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_enabled_' + maxcount_i + '" value= "1" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_autokeyword_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_cz_id_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_czbh_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_czbm_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_czlx_' + maxcount_i + '" value= "" type=hidden><input name="_subarea_kh_yxkh_kh_yxkh_lxr_add_czhxzd_' + maxcount_i + '" value= "" type=hidden>';
+                maxCount = document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_maxcount')[0];
+                currentTable = document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add')[0];
+                newRowHtml = row_html;
+                sumRowHtml = _subarea_kh_yxkh_kh_yxkh_lxr_add_get_sum_row();
+                _addRow();
+ return maxcount_i;}
+function _subarea_kh_yxkh_kh_yxkh_lxr_add_delete_row() {
+                maxCount = document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_maxcount')[0];
+                currentTable = document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add')[0];
+                _deleteRow();}
+
+function _subarea_kh_yxkh_kh_yxkh_lxr_add_get_sum_row() {
+                var row_html=new Array(15);
+
+                row_html[0]='&nbsp;';
+
+                row_html[1]='&nbsp;';
+
+                row_html[2]='&nbsp;';
+
+                row_html[3]='&nbsp;';
+
+                row_html[4]='&nbsp;';
+
+                row_html[5]='&nbsp;';
+
+                row_html[6]='&nbsp;';
+
+                row_html[7]='&nbsp;';
+
+                row_html[8]='&nbsp;';
+
+                row_html[9]='&nbsp;';
+
+                row_html[10]='&nbsp;';
+
+                row_html[11]='&nbsp;';
+
+                row_html[12]='&nbsp;';
+
+                row_html[13]='&nbsp;';
+
+                row_html[14]='&nbsp;';
+ 
+                return row_html;
+}
+ function _count_subarea_kh_yxkh_kh_yxkh_lxr_add_subToMain_All() { }
+ 
+function _doSelect_subarea_kh_yxkh_kh_yxkh_lxr_add_khmc(my_maxcount_i) {  
+                 var  mySubDialog = new Object; 
+                 var  idValue = ''; 
+                 result=window.open('/emadmin/shared/popwindow.jsp?bringinitems=id,khjc,khbh,ywy_id,ywy_mc,ywbm_id,ywbm_mc&popid=win_yxkhda&keywords=' + idValue, mySubDialog,"resizable:Yes;status:no;dialogHeight:600px;dialogWidth:800px;"); 
+                 if (result!=true) { 
+                           return; 
+                 } else { 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_kh_id_'+ my_maxcount_i )[0].value=mySubDialog[0][1]; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_kh_id_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][1]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_kh_id_'+ my_maxcount_i )[0].size=(mySubDialog[0][1]).replace(/[^x00-xFF]/g,'**').length; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_kh_id_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][1]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_kh_id_'+ my_maxcount_i )[0].fireEvent('onchange') ; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khmc_'+ my_maxcount_i )[0].value=mySubDialog[0][2]; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khmc_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][2]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khmc_'+ my_maxcount_i )[0].size=(mySubDialog[0][2]).replace(/[^x00-xFF]/g,'**').length; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khmc_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][2]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khmc_'+ my_maxcount_i )[0].fireEvent('onchange') ; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khbh_'+ my_maxcount_i )[0].value=mySubDialog[0][3]; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khbh_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][3]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khbh_'+ my_maxcount_i )[0].size=(mySubDialog[0][3]).replace(/[^x00-xFF]/g,'**').length; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khbh_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][3]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khbh_'+ my_maxcount_i )[0].fireEvent('onchange') ; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_id_'+ my_maxcount_i )[0].value=mySubDialog[0][4]; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_id_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][4]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_id_'+ my_maxcount_i )[0].size=(mySubDialog[0][4]).replace(/[^x00-xFF]/g,'**').length; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_id_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][4]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_id_'+ my_maxcount_i )[0].fireEvent('onchange') ; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_mc_'+ my_maxcount_i )[0].value=mySubDialog[0][5]; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_mc_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][5]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_mc_'+ my_maxcount_i )[0].size=(mySubDialog[0][5]).replace(/[^x00-xFF]/g,'**').length; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_mc_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][5]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_mc_'+ my_maxcount_i )[0].fireEvent('onchange') ; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_id_'+ my_maxcount_i )[0].value=mySubDialog[0][6]; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_id_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][6]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_id_'+ my_maxcount_i )[0].size=(mySubDialog[0][6]).replace(/[^x00-xFF]/g,'**').length; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_id_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][6]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_id_'+ my_maxcount_i )[0].fireEvent('onchange') ; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_mc_'+ my_maxcount_i )[0].value=mySubDialog[0][7]; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_mc_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][7]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_mc_'+ my_maxcount_i )[0].size=(mySubDialog[0][7]).replace(/[^x00-xFF]/g,'**').length; 
+ if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_mc_'+ my_maxcount_i )[0].type=='text' && (mySubDialog[0][7]).length>0) document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_mc_'+ my_maxcount_i )[0].fireEvent('onchange') ; 
+  document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_kh_id_'+ my_maxcount_i)[0].focus();  
+ _recountSumRow()  
+                 _count_subarea_kh_yxkh_kh_yxkh_lxr_add_subToMain_All() 
+                 }  
+} 
+
+
+    //-->
+</SCRIPT>
+ </div>
+<SCRIPT LANGUAGE='JavaScript'>
+    <!--
+
+       			function _doTxmInput()                                                                                                                                  
+       			{                                                                                                                                                       
+       				if( _verifyTMInput( form1.all("_sys_txm").value ) )                                                                                               
+       				{                                                                                                                                                   
+       					_getProductInfo(form1.all("_sys_txm").value,'');                                                                                                 
+       				}                                                                                                                                                   
+       			}                                                                                                                                                       
+                                                                                                                                                                           
+       			function _verifyTMInput(str){                                                                                                                           
+       				//alert(event.keyCode);                                                                                                                             
+       				if(event.keyCode==13 )                                                                                                                              
+       				{                                                                                                                                                   
+       					return true;                                                                                                                                    
+       				}                                                                                                                                                   
+       				return false;                                                                                                                                       
+       			}                                                                                                                                                       
+       			function _getProductInfo(str,ck){                                                                                                                       
+       				var ajaxRequest;  //����ajax����                                                                                                                    
+       				var resultText;  //���صĽ��                                                                                                                       
+                                                                                                                                                                           
+       				try{                                                                                                                                                
+       					// Opera 8.0+, Firefox, Safari                                                                                                                  
+       					ajaxRequest = new XMLHttpRequest();                                                                                                             
+       				 } catch (e){                                                                                                                                       
+       					// Internet Explorer Browsers                                                                                                                   
+       						try{                                                                                                                                        
+       							ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");                                                                                    
+       						} catch (e) {                                                                                                                               
+       						try{                                                                                                                                        
+       							ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");                                                                                 
+       						} catch (e){                                                                                                                                
+       							// alert("�������������⣬��֧���Զ�����!");                                                                                        
+       							return false;                                                                                                                           
+       						}                                                                                                                                           
+       					}                                                                                                                                               
+       				}                                                                                                                                                   
+                                                                                                                                                                           
+       				// Create a function that will receive data sent from the server                                                                                    
+       				ajaxRequest.onreadystatechange = function(){                                                                                                        
+       					if(ajaxRequest.readyState == 4){                                                                                                                
+       						if(ajaxRequest.status==200){                                                                                                                
+       							var _result = ajaxRequest.responseText;                                                                                                 
+       							//alert("|"+_result+"|");                                                                                                             
+       							if (_result.indexOf("TXM NotFound!")>=0){                                                                                             
+       								alert("���ݿ���û���ҵ�����: ["+str+"] ��Ӧ�ļ�¼��");                                                                          
+       							} else if (_result!="") {                                                                                                             
+       								_putResultValues(_result);                                                                                                          
+       							}                                                                                                                                       
+                                                                                                                                                                           
+       							form1.all("_sys_txm").value = "";                                                                                                   
+       							if (form1.all("_sys_txm").type=='text') form1.all("_sys_txm").focus();                                                                                                        
+       						}                                                                                                                                           
+       					}                                                                                                                                               
+       				}                                                                                                                                                   
+                                                                                                                                                                           
+       				ajaxRequest.open("GET", "/emadmin/jsp/common/get_product_info.jsp?txm="+str+"&modul_id=kh_yxkh_addModul", true);                      
+       				ajaxRequest.send(null);                                                                                                                             
+       			}                                                                                                                                                       
+                                                                                                                                                                           
+       			function _putResultValues(_result){                                                                                                                     
+                                                                                                                                                                           
+    var maxcount_i =parseInt(document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_maxcount')[0].value);  
+    						var _isFound=0;  
+    						for (i=0;i<=maxcount_i ; i++){  
+    							if  (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_chbm_'+ i )[0]!=null) {  
+    								if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_chbm_'+ i )[0].value==_result.split("$^#")[8])	{  
+    									if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_sl_'+ i )[0]!=null)	{		  
+    										_isFound=1;  
+    										document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_sl_'+ i )[0].value=parseInt(document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_sl_'+ i )[0].value)+1;  
+    										document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_sl_'+ i )[0].fireEvent('onchange') ;  
+    									}  
+    								}   
+    							}  
+    						}  
+                            if (_isFound==0)     {  
+       				           var	_my_maxcount=_subarea_kh_yxkh_kh_yxkh_lxr_add_add_new_row();                                                                                       
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_kh_id_'+ _my_maxcount )[0].value=_result.split("$^#")[1]; 
+  if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_kh_id_'+ _my_maxcount )[0].type=='text' && (_result.split("$^#")[1]).length>0)  document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_kh_id_'+ _my_maxcount )[0].size=(_result.split("$^#")[1]).replace(/[^x00-xFF]/g,'**').length; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khmc_'+ _my_maxcount )[0].value=_result.split("$^#")[2]; 
+  if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khmc_'+ _my_maxcount )[0].type=='text' && (_result.split("$^#")[2]).length>0)  document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khmc_'+ _my_maxcount )[0].size=(_result.split("$^#")[2]).replace(/[^x00-xFF]/g,'**').length; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khbh_'+ _my_maxcount )[0].value=_result.split("$^#")[3]; 
+  if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khbh_'+ _my_maxcount )[0].type=='text' && (_result.split("$^#")[3]).length>0)  document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_khbh_'+ _my_maxcount )[0].size=(_result.split("$^#")[3]).replace(/[^x00-xFF]/g,'**').length; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_id_'+ _my_maxcount )[0].value=_result.split("$^#")[4]; 
+  if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_id_'+ _my_maxcount )[0].type=='text' && (_result.split("$^#")[4]).length>0)  document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_id_'+ _my_maxcount )[0].size=(_result.split("$^#")[4]).replace(/[^x00-xFF]/g,'**').length; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_mc_'+ _my_maxcount )[0].value=_result.split("$^#")[5]; 
+  if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_mc_'+ _my_maxcount )[0].type=='text' && (_result.split("$^#")[5]).length>0)  document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywy_mc_'+ _my_maxcount )[0].size=(_result.split("$^#")[5]).replace(/[^x00-xFF]/g,'**').length; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_id_'+ _my_maxcount )[0].value=_result.split("$^#")[6]; 
+  if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_id_'+ _my_maxcount )[0].type=='text' && (_result.split("$^#")[6]).length>0)  document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_id_'+ _my_maxcount )[0].size=(_result.split("$^#")[6]).replace(/[^x00-xFF]/g,'**').length; 
+                           document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_mc_'+ _my_maxcount )[0].value=_result.split("$^#")[7]; 
+  if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_mc_'+ _my_maxcount )[0].type=='text' && (_result.split("$^#")[7]).length>0)  document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_ywbm_mc_'+ _my_maxcount )[0].size=(_result.split("$^#")[7]).replace(/[^x00-xFF]/g,'**').length;
+    									if (document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_sl_'+ _my_maxcount )[0]!=null)	{		   
+                                  document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_sl_'+ _my_maxcount )[0].value=1;
+    										      document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add_sl_'+ _my_maxcount )[0].fireEvent('onchange') ;  
+    						                 }  
+   }  
+ _recountSumRow(); 
+   _count_subarea_kh_yxkh_kh_yxkh_lxr_add_subToMain_All(); 
+  
+                            }           
+    //-->
+</SCRIPT>
+</div><div align=left><table class=x_bill_main_table id=bill_main_table cellSpacing=0 align=left><tbody><tr><td  class="x_bill_td_00" width="20%" align="right">��˾�绰:</td><td  class="x_bill_td_01" width="30%" align="left"><input type='hidden' name="lxdh_dr_id" > <input  name="lxdh"  onkeyUp='_dr_down("lxdh","kh_yxkh_addModul")' type="text" regName ="��˾�绰" value="" class="x_bill_item_input"><div id='_dr_div_lxdh' style='displaynone:;width:100px;top:28px'><table id='_dr_table_lxdh' cellspacing='0' cellpadding='0'></table></div></td><td  class="x_bill_td_00" width="20%" align="right">��˾����:</td><td  class="x_bill_td_01" width="30%" align="left"><input type='hidden' name="gscz_dr_id" > <input  name="gscz"  onkeyUp='_dr_down("gscz","kh_yxkh_addModul")' type="text" regName ="��˾����" value="" class="x_bill_item_input"><div id='_dr_div_gscz' style='displaynone:;width:100px;top:28px'><table id='_dr_table_gscz' cellspacing='0' cellpadding='0'></table></div></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">��&nbsp;&nbsp;&nbsp;&nbsp;��:</td><td  class="x_bill_td_11" width="30%" align="left"><select name="dq" regName ="����" class="x_bill_item_select" >      <option value="">��ѡ��</option>      <option value="001">������ ��</option>      <option value="002">������ ��</option>      <option value="003">������ ��</option>      <option value="004">���Ϻ� ��</option></select></td><td  class="x_bill_td_10" width="20%" align="right">��&nbsp;&nbsp;&nbsp;&nbsp;��:</td><td  class="x_bill_td_11" width="30%" align="left"><input type='hidden' name="yb_dr_id" > <input  name="yb"  onkeyUp='_dr_down("yb","kh_yxkh_addModul")' type="text" regName ="�ʱ�" value="" class="x_bill_item_input"><div id='_dr_div_yb' style='displaynone:;width:100px;top:28px'><table id='_dr_table_yb' cellspacing='0' cellpadding='0'></table></div></td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">��&nbsp;&nbsp;&nbsp;&nbsp;ַ:</td><td  class="x_bill_td_01" width="30%" align="left"><input type='hidden' name="gsdz_dr_id" > <input  name="gsdz"  onkeyUp='_dr_down("gsdz","kh_yxkh_addModul")' type="text" regName ="��ַ" value="" class="x_bill_item_input"><div id='_dr_div_gsdz' style='displaynone:;width:100px;top:28px'><table id='_dr_table_gsdz' cellspacing='0' cellpadding='0'></table></div></td><td  class="x_bill_td_00" width="20%" align="right">�ͻ���Դ:</td><td  class="x_bill_td_01" width="30%" align="left"><select name="khly" regName ="�ͻ���Դ" class="x_bill_item_select" >      <option value="">��ѡ��</option>      <option value="001">�绰����</option>      <option value="002">�ͻ�����</option>      <option value="003">��������</option>      <option value="004">ý������</option>      <option value="005">�����</option>      <option value="006">���ѽ���</option>      <option value="007">�����б�</option>      <option value="008">����Ӫ��</option>      <option value="009">�ʼ�����</option>      <option value="010">������</option>      <option value="020">�������</option>      <option value="030">����</option></select></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">�Ƿ��ص����:</td><td  class="x_bill_td_11" width="30%" align="left"><select name="sfzdgz" regName ="�Ƿ��ص����" class="x_bill_item_select" >      <option value="">��ѡ��</option>      <option value="0">��</option>      <option value="1" selected>��</option></select></td><td  class="x_bill_td_10" >&nbsp;</td><td  class="x_bill_td_11" >&nbsp;</td></tr><tr><td  class="x_bill_td_00" width="20%" align="right">��&nbsp;&nbsp;&nbsp;&nbsp;ע:</td><td  class="x_bill_td_01"  align="left"  colspan="3"  ><input type='hidden' name="bz_dr_id" > <input  name="bz"  onkeyUp='_dr_down("bz","kh_yxkh_addModul")' type="text" regName ="��ע" size="60" value="" class="x_bill_item_long_input"><div id='_dr_div_bz' style='displaynone:;width:100px;top:28px'><table id='_dr_table_bz' cellspacing='0' cellpadding='0'></table></div></td></tr><tr><td  class="x_bill_td_10" width="20%" align="right">���۴���:</td><td  class="x_bill_td_11" width="30%" align="left"><input name="ywy_mc"  type=text regName ="���۴���" value="ϵͳ����Ա"  readonly="1"   class="x_bill_item_input"> <a href="#" onClick="_doSelect_mainarea_ywy_mc()"><img src="/emadmin/images/c2/button/choose.gif" border=0/></a></td><td  class="x_bill_td_10" width="20%" align="right">��������:</td><td  class="x_bill_td_11" width="30%" align="left"><input type='hidden' name="ywbm_mc_dr_id" > <input  name="ywbm_mc"  onkeyUp='_dr_down("ywbm_mc","kh_yxkh_addModul")' type="text" regName ="��������" value="����ó��" class="x_bill_item_input"><div id='_dr_div_ywbm_mc' style='displaynone:;width:100px;top:28px'><table id='_dr_table_ywbm_mc' cellspacing='0' cellpadding='0'></table></div></td></tr></table>
+
+<input name="_subArea_num" value="1" type=hidden>
+<input name="_subArea_area_id0" value="kh_yxkh_kh_yxkh_lxr_add" type=hidden>
+<input name=_control_bill_id_ value=kh_yxkh_addBill type=hidden><input name="lfbaseprimarykey" value="null" type=hidden>
+<input name="_control_modul_id" value="kh_yxkh_addModul" type=hidden>
+<input name="id" value= "" type=hidden><input name="khbh" value= "" type=hidden><input name="sj" value= "" type=hidden><input name="msn" value= "" type=hidden><input name="email" value= "" type=hidden><input name="bm" value= "" type=hidden><input name="zw" value= "" type=hidden><input name="zdy1" value= "" type=hidden><input name="zdy2" value= "" type=hidden><input name="zdy3" value= "" type=hidden><input name="zdy4" value= "" type=hidden><input name="sh" value= "" type=hidden><input name="zdy5" value= "" type=hidden><input name="zdy6" value= "" type=hidden><input name="zdy7" value= "" type=hidden><input name="lxr" value= "" type=hidden><input name="xb" value= "" type=hidden><input name="zdy8" value= "" type=hidden><input name="zdy9" value= "" type=hidden><input name="yskye" value= "0.00" type=hidden><input name="khjb" value= "" type=hidden><input name="gsxz" value= "" type=hidden><input name="hy" value= "" type=hidden><input name="zyyw" value= "" type=hidden><input name="gsgm" value= "" type=hidden><input name="fddbr" value= "" type=hidden><input name="xydj" value= "" type=hidden><input name="jlrq" value= "" type=hidden><input name="gzzt" value= "001" type=hidden><input name="zjlxrq" value= "2009-05-29" type=hidden><input name="zjlxzt" value= "" type=hidden><input name="zjlxnr" value= "" type=hidden><input name="zjlxr" value= "" type=hidden><input name="lxcs" value= "" type=hidden><input name="gszh" value= "" type=hidden><input name="gswz" value= "" type=hidden><input name="khh" value= "" type=hidden><input name="ywy_id" value= "admin" type=hidden><input name="ywbm_id" value= "100" type=hidden><input name="lrr" value= "admin" type=hidden><input name="lrrq" value= "2009-05-29" type=hidden><input name="lrbm" value= "100" type=hidden><input name="enabled" value= "1" type=hidden><input name="autokeyword" value= "" type=hidden><input name="cz_id" value= "" type=hidden><input name="czbh" value= "" type=hidden><input name="czbm" value= "" type=hidden><input name="czlx" value= "" type=hidden><input name="czhxzd" value= "" type=hidden>
+<SCRIPT LANGUAGE='JavaScript'>
+    <!--
+
+function _doSelect_mainarea_ywy_mc() {  
+                 var  mySubDialog = new Array(1); 
+                 var  idValue=''; 
+                 result=window.open('/emadmin/shared/popwindow.jsp?bringinitems=bm_mc,yh_mc,bm_id,yh_id&popid=win_yh_detail&modul_id=kh_yxkh_addModul&keywords=' + idValue, mySubDialog,"resizable:Yes;status:no;dialogHeight:600px;dialogWidth:800px;"); 
+                 if (result!=true) { 
+                           return; 
+                 } else { 
+                           document.getElementsByName('ywbm_mc' )[0].value=mySubDialog[0][1]; 
+                           document.getElementsByName('ywy_mc' )[0].value=mySubDialog[0][2]; 
+                           document.getElementsByName('ywbm_id' )[0].value=mySubDialog[0][3]; 
+                           document.getElementsByName('ywy_id' )[0].value=mySubDialog[0][4]; 
+                 }  
+} 
+
+
+    //-->
+</SCRIPT> 
+<SCRIPT LANGUAGE='JavaScript'><!-- 
+ function reAttachSubAreaEvent() {
+
+                currentTable = document.getElementsByName('_subarea_kh_yxkh_kh_yxkh_lxr_add')[0];
+                _reAttachEvent(currentTable);
+    }//--></SCRIPT>
+
+
+
+                                <div align="center" id="_button_area" style="display:block; padding-top:10px;vertical-align:bottom; clear:both;">
+								<img src="/emadmin/images/c2/button/bill_save.gif" onMouseOver="this.style.cursor='hand'"   onClick="_click_button(form1)"/> &nbsp;&nbsp;&nbsp;&nbsp;
+                                
+                                    <img src="/emadmin/images/c2/button/bill_cancel.gif" onMouseOver="this.style.cursor='hand'"   onclick='javascript:history.back(-1);'/> 
+                                
+                                </div>
+								<div align="center" id="_button_area_message" style="display:none">���ڴ��������Ե�...</div>
+						  </form>
+						   </td>
+						  </tr>
+						</table>
+			
+			<!-- ������ -->
+
+</body>
+</html>

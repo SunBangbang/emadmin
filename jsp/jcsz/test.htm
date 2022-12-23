@@ -1,0 +1,96 @@
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<title></title>
+
+<link rel="stylesheet" href="/emadmin/css/c1/style.css">
+<script language=javascript src="/emadmin/js/do_check.js"></script>
+<script language=javascript src="/emadmin/js/pop_selections.js"></script>
+<script language=javascript src="/emadmin/js/bi_sub_table.js"></script>
+<script language=javascript src="/emadmin/js/print.js"></script>
+<script language=javascript src="/emadmin/js/do_user_select_item.js"></script>
+<script language=javascript src="/emadmin/js/pop_upload.js"></script>
+<script language=javascript src="/emadmin/js/common.js"></script>
+
+</head>
+<body>
+		  <table width="100%"  border="0" cellpadding="0" cellspacing="0">
+		  <tr>
+			<!-- 标题区 --> 
+			<td height="" align="left" valign="middle" id="center_head_bg">
+					<span class="center_title" style="width:100%;">
+						&nbsp;&nbsp;&nbsp;仓库存货对照
+					</span>
+			</td>
+			<!-- 标题区 --> 
+		  </tr>
+		  </table>
+			<!-- 内容区 -->
+
+				<form name="form1" action="ck_ch.jsp" method="get">
+					<table width="90%"  border="0" cellspacing="0" cellpadding="0" align="center">
+					  <tr>
+						<td align="left">
+								请选择仓库：<select name='ck' onchange='form1.submit()'><option value='11770436729100065' >总部一号库</option><option value='11770642120840093' >总部二号库</option><option value='11770645316640111' >上海库</option><option value='11770655274050163' >成都库</option><option value='11770656107050173' >天津办</option><option value='11770656852620179' >西安库</option><option value='11770658001780191' >西单分店库</option><option value='11770659545700201' >朝阳分店库</option><option value='11770661886160215' >海淀分店库</option></select>&nbsp;
+							  <input type="hidden" name="modul_id" value="jc_ck_ch_dz">
+							  <input type="hidden" name="is_reopen" value="1">
+						</td>
+					  </tr>
+					</table>
+				</form>													
+				<form name="form2" action="ck_ch_edit.jsp" method="post">
+					<table width="90%"  border="1" cellspacing="0" cellpadding="0" align="center">
+					  <tr>
+						<td align="left">
+								<table border='1'>
+<tr>
+<td><input type='checkbox' name='chlx'0 value='1'>台式电脑</td>
+<td><table border='1'>
+<tr><td width='25%' nowrap><input type='checkbox' name='ch_id_11772288464860057' value='1' >(001)产品名称<input type='hidden' name='old_ch_id_11772288464860057' value=''></td>
+<td width='25%' nowrap><input type='checkbox' name='ch_id_11773010290890003' value='1' >(12112312)123222<input type='hidden' name='old_ch_id_11773010290890003' value=''></td>
+<td width='25%' nowrap><input type='checkbox' name='ch_id_11773010512800011' value='1' >(1211231244)12322244<input type='hidden' name='old_ch_id_11773010512800011' value=''></td>
+<td width='25%' nowrap><input type='checkbox' name='ch_id_11773010875330017' value='1' >(5555)5555<input type='hidden' name='old_ch_id_11773010875330017' value=''></td>
+</tr><tr><td width='25%' nowrap><input type='checkbox' name='ch_id_11773011078720023' value='1' >(666)666<input type='hidden' name='old_ch_id_11773011078720023' value=''></td>
+</table></td></tr>
+<tr>
+<td><input type='checkbox' name='chlx'1 value='1'>笔记本电脑</td>
+<td><table border='1'>
+<tr><td width='25%' nowrap><input type='checkbox' name='ch_id_11772288775110063' value='1' >(002)产品名称1<input type='hidden' name='old_ch_id_11772288775110063' value=''></td>
+</table></td></tr>
+</table>
+&nbsp;
+<script language=javascript>
+<!--
+
+function check_chlx0(this) {
+	form2.ch_id_11772288464860057.checked=this.checked;
+
+}
+
+
+-->
+</script>
+
+
+							  <input type="hidden" name="modul_id" value="jc_ck_ch_dz">
+							  <input type="hidden" name="is_reopen" value="1">
+							  	<div align="center"><input type="submit" name="Submit" value="保存"> <input type="button" name="cancel" value="取消"  onclick='javascript:history.back(-1);'></div>
+
+						</td>
+					  </tr>
+					</table>
+				</form>													
+							 
+											
+			<!-- 内容区 -->
+
+</body>
+</html>

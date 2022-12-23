@@ -1,0 +1,60 @@
+BODY {
+	MARGIN: 0px;
+	margin-bottom: 0px;
+	FONT-SIZE: 14px;  
+}
+TD {
+
+	FONT-SIZE: 14px;
+	color: #000000;
+	LINE-HEIGHT: 25px;
+	text-decoration: none;
+}
+A.headlink:link {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 14px;
+	COLOR:#000000;				/*没有点过的颜色*/
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: none;
+	LINE-HEIGHT: 28px;
+}
+A.headlink:visited {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 14px;
+	COLOR: #000000;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: none;
+	LINE-HEIGHT: 28px;
+}
+A.headlink:hover {
+	FONT-WEIGHT: normal;
+	FONT-SIZE: 14px;
+	COLOR:#000000;
+	FONT-STYLE: normal;
+	FONT-FAMILY: "宋体";
+	text-decoration: none;
+	LINE-HEIGHT: 28px;
+}
+.header_head_bg {
+	background-image: url(../../images/c1/h);
+	background-repeat: repeat-x;
+	background-position: left top;
+	LINE-HEIGHT: 28px;
+}
+.footer_head_bg {
+	background-image: url(../../images/c1/footer_bg.jpg);
+	background-repeat: repeat-x;
+	background-position: left top;
+	LINE-HEIGHT: 28px;
+}
+.left_tree_head_bg {
+	background-image: url(../../images/c1/left_tree_head_bg.jpg);
+	background-repeat: repeat-x;
+	background-position: left top;
+	height:23px;
+	LINE-HEIGHT: 28px;
+}
+
+

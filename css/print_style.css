@@ -1,0 +1,102 @@
+/*   -------------------------------  list  begin ---------------------------------  */
+ /*  列表的table  */
+
+.list_table{
+    font-size: 9pt; 
+	color:#000000;
+
+	border-top-width: 1px;
+	border-bottom-width: 0px;
+	border-left-width: 1px;
+	border-right-width: 0px;
+	
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	
+	border-top-color: #B3C3D0;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #B3C3D0;
+	
+}
+
+/* 列表的主题td */
+
+.list_title_td0{
+	background-color:#E5EBF2;
+	font:normal 12pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 列表标题td */
+
+.list_title_td1{
+	background-color:#DCE0EA;
+	height:25px;
+	font:normal 11pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+
+/* 列表内容td */
+.list_content_td0{
+	height:25px;
+	background-color:#E5EBF2;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 列表操作按钮 */
+
+.list_div0{
+	font:normal 9pt 宋体;
+	text-align:right;
+}
+
+/* 列表主题 */
+
+.list_div1{
+	font:normal 12pt 宋体;
+	text-align:center;	
+}
+
+/*   -------------------------------  list  end   ---------------------------------  */
+

@@ -1,0 +1,336 @@
+<%@page contentType="text/html;charset=UTF-8"%>
+<%@include file="/emadmin/shared/checkAdminPermission.jsp"%>
+<%@page errorPage="/emadmin/shared/error.jsp"%>
+<%@page import="com.lf.util.*,com.lf.lfbase.service.*,java.util.*,java.net.*"%>
+<%! public String getChecked(String x1,String x2) {
+			if (x1==null || x2==null) return "";
+			if (x1.equals(x2)) {
+				return "checked"; 
+			} else {
+				return "";
+			}
+		}
+%>
+<%
+
+		if( !Serve.checkMkQx( request ) )
+		{
+			response.sendRedirect("/emadmin/shared/gotologin.jsp");
+			return ;
+		}
+	String _productCode=Api.getXtPreferenceValueByName("productCode");
+	String is_change_cbjs = request.getParameter("is_cbjs");
+	String jscb_value="";
+	if 	( is_change_cbjs!=null  && (is_change_cbjs.equals("1") || is_change_cbjs.equals("0"))) {
+		  Api.ub("update xt_preference set value='"+is_change_cbjs+"' where id='is_cbjs' ");
+	
+	}
+	
+    String is_cbjs=Api.getXtPreferenceValueByName("is_cbjs");  // 1 为 进货成本计算方式  0 为 计划成本计算方式
+	String is_cbjs_title_X="";
+	String is_cbjs_title="";
+	if(is_cbjs.equals("0")){
+			 is_cbjs_title="计划成本";
+			 jscb_value="0";
+	
+	} else{
+		  is_cbjs_title="进货成本";	
+		   jscb_value="1";
+	}
+
+	if (is_cbjs_title.equals("计划成本")){
+	
+			 is_cbjs_title_X="进货成本";
+	
+	}else{
+	
+				  is_cbjs_title_X="计划成本";
+	}
+
+   String modulId = request.getParameter("modul_id");
+   String tableName = request.getParameter("id");
+
+   String ndyf = Serve.getNdYfResult ( request ); 
+
+ 		String levelType="standard";
+ 
+ 		if (_productCode.equals("jxc") || _productCode.equals("cg")  || _productCode.equals("xs")  || _productCode.equals("kc") )     {
+                         levelType="simple";
+                } else if (_productCode.equals("crma") || _productCode.equals("crmfa")  || _productCode.equals("erp")  || _productCode.equals("erpc"))     {
+                         levelType="advance";
+                }
+
+	     if( request.getMethod().equalsIgnoreCase("post") )
+         {
+
+              String s[]=Api.sb("select id from xt_yh where zhanghao='admin' and password='"+Util.checkForSql(request.getParameter("pw"))+"' ");
+              if (s==null || s.length==0) throw new Exception("密码不正确！");
+									 Serve.setPreference(request);
+									 Serve.reloadAll();
+            			 Thread.sleep(3000);
+									 response.sendRedirect("/emadmin/shared/message.jsp?message="+URLEncoder.encode("操作已成功！","UTF-8"));
+			 							return ;
+         }
+		 
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<title></title>
+<%@include file="/emadmin/shared/headres.jsp"%>
+
+<SCRIPT LANGUAGE='JavaScript'>
+    <!--
+ 		function _click_button(form1) { 
+			if (doCheck(form1)==true) {
+				document.getElementById('_button_area' ).style.display="none";
+				document.getElementById('_button_area_message' ).style.display="block";
+				form1.submit();
+			}
+		}
+   //-->
+</SCRIPT>
+
+
+
+</head>
+
+<body>
+		  <table width="100%"  border="0" cellpadding="0" cellspacing="0">
+		  <tr>
+			<!-- 标题区开始--> 
+			<td  class='x_import_kh_left'>
+					&nbsp;&nbsp;&nbsp;&nbsp;<span class="index1_font" >
+						<%=Serve.getModulName( request )%>
+					</span>
+			</td>
+			<td  class='x_import_kh_right'>
+				&nbsp;
+			</td>
+			<!-- 标题区结束 --> 
+		  </tr>
+		  </table>
+		  <!-- 内容区 -->
+					<form name="form1" method="post" action="system_preference.jsp" style="margin-top: 0px;padding-top: 0px;">
+					<input type="hidden" name="modul_id" value="<%=modulId%>">
+					<table   cellspacing="0" class="x_list_result_table_sxcs" align="center">
+						<% if (!_productCode.equals("crmf")|| !_productCode.equals("crmfa") ){%>
+						<tr  align="center" >
+								<td  align="right"  class="x_bill_td_00"><input type='hidden' name='is_txm_old' value='<%=Api.getXtPreferenceValueByName("is_txm")%>'>支持条型码</td>
+								<td  align="center"  class="x_bill_td_01"><input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("is_txm"),"1")%>  name='is_txm' value='1'>启用<font color='red'>货品条码</font>支持。</td>
+						</tr>
+						<%}
+							if (levelType.equals("advance")){
+						%>
+						<tr  align="center" >
+								<td  align="right"  class="x_bill_td_10"><input type='hidden' name='is_dpm_old' value='<%=Api.getXtPreferenceValueByName("is_dpm")%>'>支持单品码</td>
+								<td  align="center"  class="x_bill_td_11"><input type='checkbox' name='is_dpm' <%=getChecked(Api.getXtPreferenceValueByName("is_dpm"),"1")%>  value='1'>启用<font color='red'>单品码</font>支持。</td>
+						</tr>
+						<%}%>
+						<tr  align="center" >
+								<td  align="right"  class="x_bill_td_10"><input type='hidden' name='is_pc_old' value='<%=Api.getXtPreferenceValueByName("is_pc")%>'>批次及有效期</td>
+								<td  align="center"  class="x_bill_td_11"><input type='checkbox' name='is_pc' <%=getChecked(Api.getXtPreferenceValueByName("is_pc"),"1")%>  value='1'>启用<font color='red'>批次及有效期</font>管理。</td>
+						</tr>
+						<%if (!levelType.equals("simple")){%>
+						<tr  align="center" >
+								<td  align="right"  class="x_bill_td_00">支持提醒功能</td>	
+								<td align="center"  class="x_bill_td_01"><input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("is_support_warning"),"1")%> name='is_support_warning' value='1'> 启用<font color='red'>提醒</font>功能。
+                                </td>
+						</tr>	
+						<%}%>
+						<%if (levelType.equals("advance")){%>
+						<tr  align="center" >
+								<td  align="right"  class="x_bill_td_00">支持短信和邮件功能</td>	
+								<td align="center"  class="x_bill_td_01"><input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("is_dx_yj"),"1")%> name='is_dx_yj' value='1'> 启用<font color='red'>短信和邮件</font>功能。
+                                </td>
+						</tr>	  
+						<%} if (!levelType.equals("simple")){%>
+						<tr>
+								<td  align="right"  class="x_bill_td_00" >设置审核选项</td>
+								<td  align="center"  class="x_bill_td_01">
+                                   <% if (_productCode.equals("jxcs") || _productCode.equals("jxca")) {%>
+                                        <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_qgd"),"1")%> name='is_auto_156' value='1'> <font color='red'>请购单</font>自动审核。<br/>
+                                        <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_cgdd"),"1")%> name='is_auto_157' value='1'> <font color='red'>采购订单</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_cgfp"),"1")%> name='is_auto_158' value='1'> <font color='red'>采购发票</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_cgd"),"1")%> name='is_auto_050' value='1'> <font color='red'>采购单</font>自动审核。<br/>
+                                           <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_yfd"),"1")%> name='is_auto_252' value='1'> <font color='red'>应付单</font>自动审核。<br/>
+                                        <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_fkd"),"1")%> name='is_auto_055' value='1'> <font color='red'>付款单</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_xsdd"),"1")%> name='is_auto_159' value='1'> <font color='red'>销售订单</font>自动审核。<br/>
+                                        <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_xsfp"),"1")%> name='is_auto_250' value='1'> <font color='red'>销售发票</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_xsd"),"1")%> name='is_auto_052' value='1'> <font color='red'>销售单</font>自动审核。<br/>
+                                         
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_zpyp"),"1")%> name='is_auto_251' value='1'> <font color='red'>赠品/样品单</font>自动审核。<br/>
+                                           <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ysd"),"1")%> name='is_auto_253' value='1'> <font color='red'>应收单</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_skd"),"1")%> name='is_auto_056' value='1'> <font color='red'>收款单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_yskd"),"1")%> name='is_auto_151' value='1'> <font color='red'>预收单</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_yfkd"),"1")%> name='is_auto_150' value='1'> <font color='red'>预付单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_rkd"),"1")%> name='is_auto_051' value='1'> <font color='red'>入库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ckd"),"1")%> name='is_auto_054' value='1'> <font color='red'>出库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_dbd"),"1")%> name='is_auto_057' value='1'> <font color='red'>调拨单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_pdd"),"1")%> name='is_auto_058' value='1'> <font color='red'>盘点单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_fyd"),"1")%> name='is_auto_152' value='1'> <font color='red'>费用单</font>自动审核。<br/>
+                                            <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_zjzz"),"1")%> name='is_auto_153' value='1'> 账间转账</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_szjl"),"1")%> name='is_auto_154' value='1'> 直接入帐</font>自动审核。<br/>
+
+                                   <% }%>
+                                    <% if (_productCode.equals("crm")|| _productCode.equals("crma") ) {%>
+                                       
+                                        <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_xsfp"),"1")%> name='is_auto_250' value='1'> <font color='red'>销售发票</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_xsd"),"1")%> name='is_auto_052' value='1'> <font color='red'>销售合同</font>自动审核。<br/>
+                                           <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ysd"),"1")%> name='is_auto_253' value='1'> <font color='red'>应收单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_skd"),"1")%> name='is_auto_056' value='1'> <font color='red'>收款单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_yskd"),"1")%> name='is_auto_151' value='1'> <font color='red'>预收单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_zjzz"),"1")%> name='is_auto_153' value='1'> <font color='red'>账间转账</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_szjl"),"1")%> name='is_auto_154' value='1'> <font color='red'>直接入帐</font>自动审核。<br/>
+                                   <% }%>
+                                     <% if (_productCode.equals("crmf")|| _productCode.equals("crmfa") ) {%>
+                                       
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ht"),"1")%> name='is_auto_155' value='1'> <font color='red'>销售合同</font>自动审核。<br/>
+                                           <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ysd"),"1")%> name='is_auto_253' value='1'> <font color='red'>应收单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_skd"),"1")%> name='is_auto_056' value='1'> <font color='red'>收款单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_yskd"),"1")%> name='is_auto_151' value='1'> <font color='red'>预收单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_zjzz"),"1")%> name='is_auto_153' value='1'> <font color='red'>账间转账</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_szjl"),"1")%> name='is_auto_154' value='1'> <font color='red'>直接入帐</font>自动审核。<br/>
+                                   <% }%>   
+                                   
+                                   
+                                    <% if (_productCode.equals("em")|| _productCode.equals("erp") || _productCode.equals("emc") || _productCode.equals("erpc") ) {%>
+                                       		 <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_qgd"),"1")%> name='is_auto_156' value='1'> <font color='red'>请购单</font>自动审核。<br/>
+                                        <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_cgdd"),"1")%> name='is_auto_157' value='1'> <font color='red'>采购订单</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_cgfp"),"1")%> name='is_auto_158' value='1'> <font color='red'>采购发票</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_cgd"),"1")%> name='is_auto_050' value='1'> <font color='red'>采购单</font>自动审核。<br/>
+                                           <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_yfd"),"1")%> name='is_auto_252' value='1'> <font color='red'>应付单</font>自动审核。<br/>
+                                        <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_fkd"),"1")%> name='is_auto_055' value='1'> <font color='red'>付款单</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_xsdd"),"1")%> name='is_auto_159' value='1'> <font color='red'>销售订单</font>自动审核。<br/>
+                                        <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_xsfp"),"1")%> name='is_auto_250' value='1'> <font color='red'>销售发票</font>自动审核。<br/>
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_xsd"),"1")%> name='is_auto_052' value='1'> <font color='red'>销售单</font>自动审核。<br/>
+                                         
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_zpyp"),"1")%> name='is_auto_251' value='1'> <font color='red'>赠品/样品单</font>自动审核。<br/>
+                                           <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ysd"),"1")%> name='is_auto_253' value='1'> <font color='red'>应收单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_skd"),"1")%> name='is_auto_056' value='1'> <font color='red'>收款单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_yskd"),"1")%> name='is_auto_151' value='1'> <font color='red'>预收单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_yfkd"),"1")%> name='is_auto_150' value='1'> <font color='red'>预付单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_rkd"),"1")%> name='is_auto_051' value='1'> <font color='red'>入库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ckd"),"1")%> name='is_auto_054' value='1'> <font color='red'>出库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_dbd"),"1")%> name='is_auto_057' value='1'> <font color='red'>调拨单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_pdd"),"1")%> name='is_auto_058' value='1'> <font color='red'>盘点单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_fyd"),"1")%> name='is_auto_152' value='1'> <font color='red'>费用单</font>自动审核。<br/>
+
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_zjzz"),"1")%> name='is_auto_153' value='1'> <font color='red'>账间转账</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_szjl"),"1")%> name='is_auto_154' value='1'> <font color='red'>直接入帐</font>自动审核。<br/>
+                                   <% }%>  
+                                   		
+                                </td>
+						</tr>
+						 <%;}%>
+						<% if (!levelType.equals("simple")){%>
+						<tr>
+								<td  align="right"  class="x_bill_td_00" >设置审核选项</td>
+								<td  align="center"  class="x_bill_td_01">
+								      <% if (_productCode.equals("jxc") ) {%>
+                                       		
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_cgd"),"1")%> name='is_auto_050' value='1'> <font color='red'>采购单</font>自动审核。<br/>
+                                           <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_yfd"),"1")%> name='is_auto_252' value='1'> <font color='red'>应付单</font>自动审核。<br/>
+                                        <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_fkd"),"1")%> name='is_auto_055' value='1'> <font color='red'>付款单</font>自动审核。<br/>
+                                       
+                                       
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_xsd"),"1")%> name='is_auto_052' value='1'> <font color='red'>销售单</font>自动审核。<br/>
+                                         
+                                        
+                                           <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ysd"),"1")%> name='is_auto_253' value='1'> <font color='red'>应收单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_skd"),"1")%> name='is_auto_056' value='1'> <font color='red'>收款单</font>自动审核。<br/>
+                                         
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_rkd"),"1")%> name='is_auto_051' value='1'> <font color='red'>入库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ckd"),"1")%> name='is_auto_054' value='1'> <font color='red'>出库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_dbd"),"1")%> name='is_auto_057' value='1'> <font color='red'>调拨单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_pdd"),"1")%> name='is_auto_058' value='1'> <font color='red'>盘点单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_fyd"),"1")%> name='is_auto_152' value='1'> <font color='red'>费用单</font>自动审核。<br/>
+
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_zjzz"),"1")%> name='is_auto_153' value='1'> <font color='red'>账间转账自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_szjl"),"1")%> name='is_auto_154' value='1'> <font color='red'>直接入帐自动审核。<br/>
+                                   <% }%>  
+								    <% if (_productCode.equals("xs") ) {%>
+                                       		
+                                        
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_xsd"),"1")%> name='is_auto_052' value='1'> <font color='red'>销售单</font>自动审核。<br/>
+                                         
+                                        
+                                           <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ysd"),"1")%> name='is_auto_253' value='1'> <font color='red'>应收单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_skd"),"1")%> name='is_auto_056' value='1'> <font color='red'>收款单</font>自动审核。<br/>
+                                         
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_rkd"),"1")%> name='is_auto_051' value='1'> <font color='red'>入库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ckd"),"1")%> name='is_auto_054' value='1'> <font color='red'>出库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_dbd"),"1")%> name='is_auto_057' value='1'> <font color='red'>调拨单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_pdd"),"1")%> name='is_auto_058' value='1'> <font color='red'>盘点单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_fyd"),"1")%> name='is_auto_152' value='1'> <font color='red'>费用单</font>自动审核。<br/>
+
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_zjzz"),"1")%> name='is_auto_153' value='1'> <font color='red'>账间转账</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_szjl"),"1")%> name='is_auto_154' value='1'> <font color='red'>直接入帐</font>自动审核。<br/>
+                                   <% }%>  
+											   <% if (_productCode.equals("cg") ) {%>
+                                       		
+                                         <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_cgd"),"1")%> name='is_auto_050' value='1'> <font color='red'>采购单</font>自动审核。<br/>
+                                           <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_yfd"),"1")%> name='is_auto_252' value='1'> <font color='red'>应付单</font>自动审核。<br/>
+                                        <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_fkd"),"1")%> name='is_auto_055' value='1'> <font color='red'>付款单</font>自动审核。<br/>
+                                       
+                                       
+                                      
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_rkd"),"1")%> name='is_auto_051' value='1'> <font color='red'>入库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ckd"),"1")%> name='is_auto_054' value='1'> <font color='red'>出库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_dbd"),"1")%> name='is_auto_057' value='1'> <font color='red'>调拨单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_pdd"),"1")%> name='is_auto_058' value='1'> <font color='red'>盘点单</font>自动审核。<br/>
+                                         
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_zjzz"),"1")%> name='is_auto_153' value='1'> <font color='red'>账间转账</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_szjl"),"1")%> name='is_auto_154' value='1'> <font color='red'>直接入帐</font>自动审核。<br/>
+                                   <% }%>  
+                                 		      <% if (_productCode.equals("kc") ) {%>
+                                      
+                                      
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_rkd"),"1")%> name='is_auto_051' value='1'> <font color='red'>入库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_ckd"),"1")%> name='is_auto_054' value='1'> <font color='red'>出库单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_dbd"),"1")%> name='is_auto_057' value='1'> <font color='red'>调拨单</font>自动审核。<br/>
+                                          <input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("auto_sh_pdd"),"1")%> name='is_auto_058' value='1'> <font color='red'>盘点单</font>自动审核。<br/>
+                                         
+                                          
+                                   <% }%>  
+								</td>
+								</tr>	
+								 <%}%>
+						<tr  align="center" >
+								<td  align="right"  class="x_bill_td_10">设置小数位数</td>
+								<td  align="center"  class="x_bill_td_11">货品数量保留 <input  regName ="数量的小数位数"  reg = "_int_"   type='text' size='1' maxlength='1'  name='decimal_num' value='<%=Api.getXtPreferenceValueByName("decimal_num")%>'><input type='hidden' name='decimal_num_old' value='<%=Api.getXtPreferenceValueByName("decimal_num")%>'> 位小数，金额保留 <input  regName ="金额的小数位数"  reg = "_int_"   type='text' size='1' maxlength='1'  name='je_num' value='<%=Api.getXtPreferenceValueByName("je_num")%>'><input type='hidden' name='je_num_old' value='<%=Api.getXtPreferenceValueByName("je_num")%>'> 位小数。</td>
+						</tr>
+
+						<!--<tr  align="center" >
+								<td  align="right"  class="x_bill_td_00">设置成本计算方式</td>	
+								<td align="center"  class="x_bill_td_01">当前成本计算方式：<font color='red'><%=is_cbjs_title%></font> 要设置成
+								<input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("is_cbjs"),"8")%> name='is_cbjs' value='<%=jscb_value.equals("0")?"1":"0"%>'><%=is_cbjs_title_X%>
+                                </td>
+						</tr>	
+						-->
+						<% if (_productCode.equals("kc") ) {%>
+						<tr  align="center" >
+								<td  align="right"  class="x_bill_td_00">设置月结功能</td>	
+								<td align="center"  class="x_bill_td_01"><input type='checkbox' <%=getChecked(Api.getXtPreferenceValueByName("is_kc_yj"),"1")%> name='is_kc_yj' value='1'> 启用<font color='red'>系统月结</font>功能。
+                                </td>
+						</tr>	  
+						<%}%>
+						<tr >
+						<td class="x_bill_td_01" colspan='2'><br>&nbsp;&nbsp;只有管理员才能够进行此项操作,请输入管理员密码:&nbsp;&nbsp;<input type="password" regName ="管理员密码"  reg = "_r_"  name="pw" ><span style="color:red;">&nbsp;*</span><br><br>
+						</td>
+						</tr>
+
+					  </table>
+
+                                  <br/>
+                                <div align="center" id="_button_area" style="display:block; padding-top:10px;vertical-align:bottom;">
+								<img src="/emadmin/images/c2/button/bill_save.gif" onMouseOver="this.style.cursor='hand'"   onClick="_click_button(form1)"/> &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <img src="/emadmin/images/c2/button/bill_cancel.gif" onMouseOver="this.style.cursor='hand'"   onclick='javascript:history.back(-1);'/> 
+                                </div>
+								<div align="center" id="_button_area_message" style="display:none">正在处理，请稍等...</div>
+					</form>
+			
+			<!-- 内容区 -->
+</body>
+</html>

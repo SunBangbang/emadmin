@@ -1,0 +1,434 @@
+BODY {
+	background-color: #F3F8FA;
+	FONT-SIZE: 13px;  MARGIN: 0px;
+}
+TD {
+	FONT-SIZE: 13px; LINE-HEIGHT: 18px
+}
+input { 
+	font-size: 13px;
+    background-color: #F3F8FA;
+	BORDER-RIGHT: #969696 0px solid;
+    BORDER-TOP: #969696 0px solid;
+    FONT-WEIGHT: normal;
+    BORDER-LEFT: #969696 0px solid;
+    BORDER-BOTTOM: #454545 1px solid;
+    FONT-FAMILY: "宋体"
+	   }
+textarea { 
+	font-size: 13px;
+    FONT-FAMILY: "宋体"
+	   }
+select  { 
+font-size: 13px;
+}
+.tabletitle {
+	LINE-HEIGHT: 23px;
+	color: #030077;
+    BACKGROUND-COLOR:#E5EBF2;/*录入表格头部分类强调颜色*/
+	/*表格标题背景background-image: url(../images/titlebg.jpg);*/
+	/* borderColorLight=#B3C3D0 borderColorDark=#ffffff*/
+}
+
+
+
+ /*  表单的table  */
+
+.bill_table{
+    font-size: 11pt; 
+	color:#000000;
+
+	border-top-width: 1px;
+	border-bottom-width: 0px;
+	border-left-width: 1px;
+	border-right-width: 0px;
+	
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	
+	border-top-color: #B3C3D0;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #B3C3D0;
+	
+}
+
+/* 标题 */
+
+.table_td_selected0{
+	background-color: #ffcccc;
+	height:25px;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+
+/* 子表区域的td单元格 */
+
+.bill_title{
+	background-color:#E5EBF2;
+	height:25px;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 子表区域的td单元格 */
+
+.bill_item_content_title{
+	background-color:#E5EBF2;
+	height:25px;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 表单标题的td */
+
+.bill_item_content{
+	background-color:#DCE0EA;
+	height:25px;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 表单td */
+.bill_td2{
+	background-color:#E5EBF2;
+	height:25px;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 表单td */
+.bill_td3{
+	background-color:#DCE0EA;
+	height:25px;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 表单的标题 */
+
+.bill_title_div0{
+	height:25px;
+	font:normal 11pt 宋体;
+	text-align:center;
+}
+
+/* 普通td单元格 */
+
+.div_action0{
+	height:25px;
+	font:normal 9pt 宋体;
+	text-align:right;
+}
+
+/*   -------------------------------  list  begin ---------------------------------  */
+ /*  列表的table  */
+
+.list_table{
+    font-size: 9pt; 
+	color:#000000;
+
+	border-top-width: 1px;
+	border-bottom-width: 0px;
+	border-left-width: 1px;
+	border-right-width: 0px;
+	
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	
+	border-top-color: #B3C3D0;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #B3C3D0;
+	
+}
+
+/* 列表的主题td */
+
+.list_title_td0{
+	background-color:#E5EBF2;
+	font:normal 12pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 列表标题td */
+
+.list_title_td1{
+	background-color:#DCE0EA;
+	height:25px;
+	font:normal 11pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 列表内容td */
+.list_title_td2{
+	background-color:#E5EBF2;
+	height:25px;
+	font:normal 10pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 列表内容td */
+.list_content_td0{
+	height:25px;
+	background-color:#E5EBF2;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 列表内容td */
+.list_search_title_td{
+	background-color:#E5EBF2;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+/* 列表内容td */
+.list_search_content_td{
+	background-color:#E5EBF2;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+
+/* 列表操作按钮 */
+
+.list_div0{
+	font:normal 9pt 宋体;
+	text-align:right;
+}
+
+/* 列表主题 */
+
+.list_div1{
+	font:normal 12pt 宋体;
+	text-align:center;	
+}
+
+/*   -------------------------------  list  end   ---------------------------------  */
+
+ /*  table  */
+
+.count_table0{
+	margin-top:5px;
+	margin-left:5px;
+    font-size: 11pt; 
+	color:#000000;
+
+	border-top-width: 1px;
+	border-bottom-width: 0px;
+	border-left-width: 1px;
+	border-right-width: 0px;
+	
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	
+	border-top-color: #B3C3D0;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #B3C3D0;
+	
+}
+
+.count_table1{
+	margin-top:5px;
+	margin-left:5px;
+    font-size: 11pt; 
+	color:#000000;
+
+	border-top-width: 1px;
+	border-bottom-width: 0px;
+	border-left-width: 1px;
+	border-right-width: 0px;
+	
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	
+	border-top-color: #B3C3D0;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #B3C3D0;
+	
+}
+
+/* 普通td单元格 */
+
+.count_td0{
+	height:25px;
+	font:normal 9pt 宋体;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #B3C3D0;
+	border-bottom-color: #B3C3D0;
+	border-left-color: #FFFFFF;
+	padding: 5px;
+}
+
+
+/* 普通td单元格 */
+
+.count_title_div0{
+	height:25px;
+	font:normal 9pt 宋体;
+	text-align:center;
+}

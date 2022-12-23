@@ -1,0 +1,42 @@
+<body  onload="init()">
+<div align="center">
+<br>
+     输入高级筛选条件<br>
+    <textarea   id="theValue" rows=20 cols=60 align='center'></textarea>
+    <br>
+	<input type='button' value="确定" onclick="doOK()">
+</div>
+</body>
+<SCRIPT LANGUAGE='JavaScript'>
+    <!--
+	function init() {
+			theValue.value=window.dialogArguments[0];
+	}
+    // 取消操作
+	function doCancel() {
+			window.returnValue = false;
+			window.close();
+	}
+	//确定
+	function doOK() {
+		window.returnValue = true;
+		window.dialogArguments[0] = theValue.value;
+		window.close();
+	}
+	//热键：ctl+s确定 esc 取消
+	document.onkeydown = function(){ _onDocumenthotkey() };
+	 function _onDocumenthotkey (){
+		 if (event.keyCode==83 &&   event.ctrlKey) {   //回车
+				 doOK();
+                return;
+		 }
+		 if (event.keyCode==27) {   //或者 Escape
+				doCancel();
+				return;
+		 }
+
+	}
+    //-->
+</SCRIPT> 
+
+
